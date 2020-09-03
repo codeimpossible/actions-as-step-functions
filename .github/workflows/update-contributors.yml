@@ -1,10 +1,10 @@
-name: Update CONTRIBUTORS.md
+name: Add image to CONTRIBUTORS.md
 on:
   push:
     branches:
     - master
     paths:
-    - 'portraits/**'
+    - '**.png'
 
 jobs:
   update:
