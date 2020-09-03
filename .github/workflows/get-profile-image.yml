@@ -7,16 +7,16 @@ on:
       - CONTRIBUTORS.md
 jobs:
   getavatar:
-    if: github.event.pusher.name != "github-actions"
+    if: github.actor != 'github-actions'
     runs-on: ubuntu-latest
     steps:
       - name: Get the users profile avatar and commit it
         uses: actions/checkout@v2
       - run: |
-          wget -O ${{ github.author }}.png https://github.com/${{ github.author }}.png?size=40
-          mv ${{ github.author }}.png ./portraits/${{ github.author }}.png
+          wget -O ${{ github.actor }}.png https://github.com/${{ github.actor }}.png?size=40
+          mv ${{ github.actor }}.png ./portraits/${{ github.actor }}.png
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
-          git commit -m "adds avatar for ${{ github.author }}"
+          git commit -m "adds avatar for ${{ github.actor }}"
           git push
