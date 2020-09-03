@@ -7,7 +7,7 @@ on:
       - CONTRIBUTORS.md
 jobs:
   getavatar:
-    if: github.author != "github-actions"
+    if: github.event.pusher.name != "github-actions"
     runs-on: ubuntu-latest
     steps:
       - name: Get the users profile avatar and commit it
