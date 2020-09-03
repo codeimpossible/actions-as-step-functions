@@ -1,0 +1,32 @@
+name: Update CONTRIBUTORS.md
+on:
+  push:
+    branches:
+    - master
+    paths:
+    - portraits/**.png
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - id: files
+        uses: jitterbit/get-changed-files@v1
+        run: |
+          empty=""
+          ext=".png"
+          for changed_file in ${{ steps.files.outputs.all }}; do
+            contributor=${changed_file#portraits/}
+            contributor=${contributor/$ext/$empty}
+            file=$(cat CONTRIBUTORS.md)
+            img="<img src='${changed_file}' title='${contributor}' />"
+            echo "${file/$contributor/$img}" > CONTRIBUTORS.md
+          done
+      - name: Add contributor profile image to CONTRIBUTORS.md
+        uses: actions/checkout@v2
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "updates profile in CONTRIBUTORS.md"
+          git push
