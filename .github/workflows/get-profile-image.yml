@@ -12,6 +12,9 @@ jobs:
     steps:
       - name: Get the users profile avatar and commit it
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PAT }}
+          persist-credentials: false
       - run: |
           wget -O ${{ github.actor }}.png https://github.com/${{ github.actor }}.png?size=40
           mv ${{ github.actor }}.png ./portraits/${{ github.actor }}.png
