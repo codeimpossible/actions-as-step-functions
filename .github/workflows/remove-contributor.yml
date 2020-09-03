@@ -1,0 +1,29 @@
+name: Remove Contributor (Manual)
+on: 
+  workflow_dispatch:
+    inputs:
+      contributor:
+        description: 'Contributor Name'
+        required: true
+
+jobs:
+   remove:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Remove a contributor
+      uses: actions/checkout@v2
+    - run: |
+        echo "removing contributor ${{ github.event.inputs.contributor }}"
+        file=$(cat CONTRIBUTORS.md)
+        empty=""
+        contributor="${{ github.event.inputs.contributor }}"
+        img="<img src='portraits/${contributor}.png' title='${contributor}' />"
+        file="${file/$img/$empty}"
+        echo "${file/$contributor/$empty}" > CONTRIBUTORS.md
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git rm portraits/${{ github.event.inputs.contributor }}.png
+        git add .
+        git commit -m "removes ${{ github.event.inputs.contributor }}"
+        git push
+        
