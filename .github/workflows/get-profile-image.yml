@@ -15,12 +15,15 @@ jobs:
         with:
           persist-credentials: false
       - run: |
-          wget -O ${{ github.actor }}.png https://github.com/${{ github.actor }}.png?size=40
-          mv ${{ github.actor }}.png ./portraits/${{ github.actor }}.png
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add .
-          git commit -m "adds avatar for ${{ github.actor }}"
+          cat CONTRIBUTORS.md | grep -v img | grep -v '#' | grep -v '^$' | while read line
+          do
+            wget -O ${line}.png https://github.com/${line}.png?size=40
+            mv ${line}.png ./portraits/${line}.png
+            git add .
+            git commit -m "adds avatar for ${line}"
+          done
       - name: Push changes
         uses: ad-m/github-push-action@v0.5.0
         with:
