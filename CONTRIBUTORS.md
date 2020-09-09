@@ -1,5 +1,5 @@
 # The List of Contributors!
 
 <img src='portraits/codeimpossible.png' title='codeimpossible' />
-jbubriski
-github
+<img src='portraits/jbubriski.png' title='jbubriski' />
+<img src='portraits/github.png' title='github' />
