@@ -23,7 +23,7 @@ jobs:
             contributor=${changed_file#portraits/}
             contributor=${contributor/$ext/$empty}
             file=$(cat CONTRIBUTORS.md)
-            img="<img src='${changed_file}' title='${contributor}' style='float:left;' />"
+            img="<img src='${changed_file}' title='${contributor}' align='left' />"
             echo "${file/$contributor/$img}" > CONTRIBUTORS.md
           done
           git config user.name github-actions
